@@ -2,11 +2,14 @@ import java.util.ArrayList;
 
 public class DataHandler {
     ArrayList<String[]> data = new ArrayList<>();
+    DataHandler instance;
 
     private DataHandler() {}
 
-    public DataHandler createDataHandler() {
-        return new DataHandler();
+    public DataHandler getInstance() {
+        if(instance==null)
+            instance = new DataHandler();
+        return instance;
     }
 
     public void saveMessage(String[] dialogue){
