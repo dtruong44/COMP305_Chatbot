@@ -29,6 +29,8 @@ public class ChatbotEngine {
      */
     public static String createResponse(String userInput) throws Exception{
 
+        apiKey = loadEnv("APIKEY.env");
+
         String body = String.format("""
         {
           "model": "gpt-4",

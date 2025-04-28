@@ -6,6 +6,7 @@ public final class UserInterface {
     private final JFrame window;
     private final GridBagConstraints gbc;
     private JTextArea chat;
+    private String currentMessage;
     
     public UserInterface() {
         this.window = new JFrame("Chatbot");
@@ -101,7 +102,12 @@ public final class UserInterface {
 
         JButton send_button = new JButton("Send");
         send_button.addActionListener(e -> {sendMessage(chat, user_text_area);
-                                            sendChatBotMessage(chat);});
+            try {
+                sendChatBotMessage(chat,user_text_area);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         user_input_panel.add(user_text_area);
         user_input_panel.add(send_button);
@@ -138,13 +144,14 @@ public final class UserInterface {
     public void sendMessage(JTextArea chat, JTextArea user_message) {
         String message = user_message.getText();
         if (!(message.equals(""))) {
+            currentMessage = message;
             chat.append("USER: " + message + "\n");
             user_message.setText("");
         }
     }
 
-    public void sendChatBotMessage(JTextArea chat) {
-        String message = "Bot not implemented yet, this is a filler message.";
+    public void sendChatBotMessage(JTextArea chat, JTextArea user_message) throws Exception {
+        String message = ChatbotEngine.createResponse(currentMessage);
         chat.append("BOT: " + message + "\n");
     }
 }
