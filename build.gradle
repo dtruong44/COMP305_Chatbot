@@ -16,7 +16,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'ChatbotEngine.java'
+    mainClass = 'Main.java'
 }
 
 java {
