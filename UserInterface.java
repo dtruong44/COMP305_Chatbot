@@ -101,7 +101,12 @@ public final class UserInterface {
 
         JButton send_button = new JButton("Send");
         send_button.addActionListener(e -> {sendMessage(chat, user_text_area);
-                                            sendChatBotMessage(chat);});
+            try {
+                sendChatBotMessage(chat,user_text_area);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         user_input_panel.add(user_text_area);
         user_input_panel.add(send_button);
@@ -143,8 +148,9 @@ public final class UserInterface {
         }
     }
 
-    public void sendChatBotMessage(JTextArea chat) {
-        String message = "Bot not implemented yet, this is a filler message.";
+    public void sendChatBotMessage(JTextArea chat, JTextArea user_message) throws Exception {
+        String userMessage = user_message.getText();
+        String message = ChatbotEngine.createResponse(userMessage);
         chat.append("BOT: " + message + "\n");
     }
 }
