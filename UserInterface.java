@@ -6,6 +6,7 @@ public final class UserInterface {
     private final JFrame window;
     private final GridBagConstraints gbc;
     private JTextArea chat;
+    private String currentMessage;
     
     public UserInterface() {
         this.window = new JFrame("Chatbot");
@@ -143,14 +144,14 @@ public final class UserInterface {
     public void sendMessage(JTextArea chat, JTextArea user_message) {
         String message = user_message.getText();
         if (!(message.equals(""))) {
+            currentMessage = message;
             chat.append("USER: " + message + "\n");
             user_message.setText("");
         }
     }
 
     public void sendChatBotMessage(JTextArea chat, JTextArea user_message) throws Exception {
-        String userMessage = user_message.getText();
-        String message = ChatbotEngine.createResponse(userMessage);
+        String message = ChatbotEngine.createResponse(currentMessage);
         chat.append("BOT: " + message + "\n");
     }
 }
