@@ -7,17 +7,21 @@ public final class UserInterface {
     private final GridBagConstraints gbc;
     private JTextArea chat;
     private String currentMessage;
+
+    Color darkBlue = new Color(10, 25, 74);
+    Color lightBlue = new Color(173, 216, 230);
     
     public UserInterface() {
         this.window = new JFrame("Chatbot");
         window.setSize(400, 500);
         window.setLayout(new GridBagLayout());
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().setBackground(darkBlue);
         this.gbc = new GridBagConstraints();
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        window.add(createWelcomeLavel(), gbc);
+        window.add(createWelcomeLabel(), gbc);
 
         gbc.gridy = 1;
         window.add(createStartButton(), gbc);
@@ -26,9 +30,10 @@ public final class UserInterface {
         window.setVisible(true);
     }
 
-    public JLabel createWelcomeLavel() {
+    public JLabel createWelcomeLabel() {
         JLabel welcome_label = new JLabel("Welcome to the Chatbot");
-        welcome_label.setFont(new Font("Serif", Font.BOLD, 20)); 
+        welcome_label.setFont(new Font("Serif", Font.BOLD, 20));
+        welcome_label.setForeground(lightBlue);
         return welcome_label;
     }
 
@@ -57,12 +62,16 @@ public final class UserInterface {
         JPanel chat_area = new JPanel();
         chat_area.setLayout(new BoxLayout(chat_area, BoxLayout.X_AXIS));
         chat_area.add(createButtons());
-
+        chat_area.setBackground(darkBlue);
+        chat_area.setBackground(darkBlue);
         JTextArea text_area = new JTextArea(20, 30);
         this.chat = text_area;
         text_area.setLineWrap(true);
         text_area.setWrapStyleWord(true);
         text_area.setEditable(false);
+        text_area.setBackground(lightBlue);
+        text_area.setForeground(darkBlue);
+        text_area.setCaretColor(Color.WHITE);
         text_area.append("BOT: Hello, welcome to the chat\n");
 
         JScrollPane scroll_pane = new JScrollPane(text_area);
@@ -76,7 +85,6 @@ public final class UserInterface {
     public JPanel createButtons() {
         JPanel button_panel = new JPanel();
         button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
-
         JButton clear_button = new JButton("Clear Chat");
         JButton save_button = new JButton("Save Chat");
         JButton open_chat_button = new JButton("Open Chat");
@@ -85,7 +93,7 @@ public final class UserInterface {
         quit_button.addActionListener(e -> System.exit(0));
         button_panel.add(quit_button);
 
-
+        button_panel.setBackground(lightBlue);
         button_panel.add(clear_button);
         button_panel.add(save_button);
         button_panel.add(open_chat_button);
@@ -96,9 +104,12 @@ public final class UserInterface {
 
     public JPanel createUserInputArea() {
         JPanel user_input_panel = new JPanel();
+        user_input_panel.setBackground(darkBlue);
         JTextArea user_text_area = new JTextArea(3, 20);
         user_text_area.setLineWrap(true);
         user_text_area.setWrapStyleWord(true);
+        user_text_area.setBackground(lightBlue);
+        user_text_area.setForeground(Color.BLACK);
 
         JButton send_button = new JButton("Send");
         send_button.addActionListener(e -> {sendMessage(chat, user_text_area);
@@ -120,7 +131,8 @@ public final class UserInterface {
     }
     public JLabel createCharCounter(JTextArea userTextArea) {
         JLabel charCountLabel = new JLabel("Characters: 0");
-    
+
+        charCountLabel.setForeground(Color.WHITE);
         userTextArea.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 updateCount();
